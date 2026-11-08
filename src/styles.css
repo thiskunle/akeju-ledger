@@ -1,0 +1,137 @@
+/* Copyright (c) 2026 Adekunle Akeju. All rights reserved except as licensed.
+   Akeju Ledger, created by Adekunle Akeju. SPDX-License-Identifier: AGPL-3.0-or-later */
+:root {
+  --paper: #f7fbf6;
+  --bar: #dcefdf;
+  --ink: #17324d;
+  --soft: #4a6275;
+  --rule: #a3c4ab;
+  --income: #0b6bcb;
+  --expense: #d9730d;
+  --action: #17324d;
+  --on-action: #f7fbf6;
+  --bad: #a11d33;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #12232f; --bar: #1b3442; --ink: #e6f2ea; --soft: #a9bfc4; --rule: #3a5a63;
+    --income: #3d8ae0; --expense: #c9791c; --action: #e6f2ea; --on-action: #12232f; --bad: #ff9fae;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.5 Bahnschrift, "DIN Alternate", "Avenir Next", "Segoe UI", system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+h1, h2, h3, p { margin: 0; }
+h2 { font-size: 22px; line-height: 1.2; font-weight: 600; }
+h3 { font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+.masthead { padding: 40px 24px 28px; max-width: 1320px; margin: 0 auto; }
+.masthead h1 { font-size: clamp(52px, 11vw, 124px); line-height: .95; font-weight: 700; font-stretch: 75%; letter-spacing: -.01em; }
+.masthead p { color: var(--soft); font-size: 18px; margin-top: 10px; }
+
+.layout { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 40px; max-width: 1320px; margin: 0 auto; padding: 0 24px; align-items: start; }
+.entry { position: sticky; top: 16px; display: grid; gap: 12px; padding-bottom: 8px; }
+.sheets { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; min-width: 0; }
+
+label { display: grid; gap: 3px; font-size: 14px; font-weight: 600; }
+input, select { font: inherit; font-weight: 400; color: inherit; background: transparent; border: 0; border-bottom: 2px solid var(--ink); padding: 6px 2px; min-width: 0; width: 100%; }
+select option { color: #17324d; background: #fff; }
+:focus-visible { outline: 2px solid var(--income); outline-offset: 2px; }
+.money { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.kind { border: 0; padding: 0; margin: 0; display: grid; grid-template-columns: 1fr 1fr; }
+.kind legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.kind label { display: block; }
+.kind input { position: absolute; opacity: 0; width: 1px; }
+.kind span { display: block; text-align: center; padding: 8px; border: 2px solid var(--ink); font-size: 16px; cursor: pointer; }
+.kind label + label span { border-left: 0; }
+.kind input:checked + span { background: var(--ink); color: var(--paper); }
+.kind input:focus-visible + span { outline: 2px solid var(--income); outline-offset: 2px; }
+
+button, .file-button { font: inherit; font-weight: 600; font-size: 16px; padding: 9px 16px; border: 2px solid var(--action); background: var(--action); color: var(--on-action); cursor: pointer; }
+button.secondary, .file-button { background: transparent; color: var(--action); }
+button.link { background: none; border: 0; padding: 2px 0; color: inherit; text-decoration: underline; font-weight: 400; font-size: 14px; justify-self: start; }
+.file-button { display: inline-block; }
+.file-button input { position: absolute; opacity: 0; width: 1px; }
+.file-button:focus-within { outline: 2px solid var(--income); outline-offset: 2px; }
+.form-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+#status { min-height: 24px; font-size: 14px; overflow-wrap: anywhere; }
+#status.is-error { color: var(--bad); font-weight: 600; }
+.quiet { color: var(--soft); }
+
+.period { display: flex; flex-wrap: wrap; gap: 16px; align-items: end; margin-bottom: 14px; }
+.period h2 { margin-right: auto; }
+.period label { grid-auto-flow: column; align-items: center; gap: 8px; }
+.period input { width: 160px; }
+.statement { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0; border-top: 3px solid var(--ink); }
+.statement div { padding: 10px 0 12px; border-bottom: 1px solid var(--rule); }
+.statement dt { font-size: 14px; color: var(--soft); }
+.statement dd { margin: 0; font-size: clamp(22px, 2.6vw, 32px); font-weight: 600; line-height: 1.25; }
+
+.chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.legend { list-style: none; display: flex; gap: 16px; margin: 0; padding: 0; font-size: 14px; }
+.legend li { display: flex; gap: 6px; align-items: center; }
+.swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.swatch-income { background: var(--income); }
+.swatch-expense { background: var(--expense); }
+.chart-wrap { position: relative; }
+#chart { display: block; width: 100%; height: auto; }
+.grid { stroke: var(--rule); stroke-width: 1; }
+.axis { fill: var(--soft); font-size: 12px; }
+.hit { fill: transparent; }
+.month:hover .hit { fill: var(--bar); }
+.bar-income { fill: var(--income); }
+.bar-expense { fill: var(--expense); }
+.tip { position: absolute; top: 0; width: 150px; background: var(--ink); color: var(--paper); padding: 6px 10px; font-size: 13px; display: grid; pointer-events: none; }
+.tip[hidden] { display: none; }
+details { margin-top: 8px; font-size: 14px; }
+summary { cursor: pointer; }
+table { width: 100%; border-collapse: collapse; }
+table.plain td, table.plain th { text-align: right; padding: 3px 6px; }
+table.plain th:first-child { text-align: left; }
+
+/* Continuous-form accounting paper: the sprocket margin and green bars are the signature of this app. */
+.greenbar { position: relative; overflow-x: auto; border-left: 18px solid transparent; border-right: 18px solid transparent; background:
+  radial-gradient(circle at 9px 13px, var(--paper) 4px, var(--rule) 4.5px, transparent 5px) left top / 18px 26px repeat-y border-box,
+  radial-gradient(circle at 9px 13px, var(--paper) 4px, var(--rule) 4.5px, transparent 5px) right top / 18px 26px repeat-y border-box; }
+.greenbar th { text-align: left; font-size: 13px; font-weight: 600; padding: 7px 10px; border-bottom: 2px solid var(--ink); white-space: nowrap; }
+.greenbar td { padding: 8px 10px; vertical-align: top; }
+.greenbar tbody tr:nth-child(odd) { background: var(--bar); }
+.greenbar .date { white-space: nowrap; }
+.greenbar .what { display: block; font-weight: 600; overflow-wrap: anywhere; }
+.greenbar .who { display: block; font-size: 13px; color: var(--soft); overflow-wrap: anywhere; }
+.num, .greenbar th.num { text-align: right; white-space: nowrap; }
+.income, .expense { font-weight: 600; }
+.actions { white-space: nowrap; text-align: right; }
+.actions .link + .link { margin-left: 10px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+.empty { padding: 18px 0; color: var(--soft); border-top: 1px solid var(--rule); }
+
+.cats { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 10px; }
+.cats ul { list-style: none; margin: 0; padding: 0; }
+.cats li { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--rule); }
+.files p { margin: 6px 0 12px; }
+.colophon { max-width: 1320px; margin: 48px auto 0; padding: 16px 24px 32px; color: var(--soft); font-size: 14px; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: minmax(0, 1fr); gap: 32px; padding: 0 16px; }
+  .masthead { padding: 28px 16px 20px; }
+  .entry { position: static; }
+  .statement { grid-template-columns: repeat(2, 1fr); }
+  .cats { grid-template-columns: 1fr; }
+  .colophon { padding: 16px; }
+  .period input { width: 120px; }
+}
+
+/* On phones each entry becomes a small stacked row so words are never split. */
+@media (max-width: 560px) {
+  .greenbar thead { display: none; }
+  .greenbar table, .greenbar tbody { display: block; }
+  .greenbar tr { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 10px; }
+  .greenbar td { padding: 0; }
+  .greenbar .date { order: 1; }
+  .greenbar td.num:not(.tax) { order: 2; }
+  .greenbar .desc { order: 3; grid-column: 1 / -1; }
+  .greenbar .tax { order: 4; text-align: left; font-size: 14px; }
+  .greenbar .tax:not(:empty)::before { content: "Tax "; }
+  .greenbar .actions { order: 5; }
+}

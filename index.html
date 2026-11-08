@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Adekunle Akeju">
+<meta name="description" content="Business income and expense tracker created by Adekunle Akeju. Your records stay in your browser.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Akeju Ledger</title>
+<link rel="icon" href="src/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="src/styles.css">
+<script type="module" src="src/app.js"></script>
+</head>
+<body>
+<header class="masthead">
+  <h1>Akeju Ledger</h1>
+  <p>Business income and expenses. Your records stay in this browser.</p>
+</header>
+
+<main class="layout">
+  <form id="entry-form" class="entry" novalidate>
+    <h2 id="form-title">New entry</h2>
+    <fieldset class="kind">
+      <legend>Type</legend>
+      <label><input type="radio" name="type" value="income" checked><span>Income</span></label>
+      <label><input type="radio" name="type" value="expense"><span>Expense</span></label>
+    </fieldset>
+    <label>Date<input name="date" type="date" required></label>
+    <label>Description<input name="description" maxlength="200" required></label>
+    <label><span id="party-label-text">Client</span><input name="party" maxlength="120"></label>
+    <label>Category<select name="category" id="category"></select></label>
+    <div class="money">
+      <label>Amount before tax<input name="amount" inputmode="decimal" autocomplete="off"></label>
+      <label>HST or GST<input name="tax" inputmode="decimal" autocomplete="off"></label>
+    </div>
+    <button type="button" class="link" id="add-hst">Add 13% Ontario HST</button>
+    <label>Note<input name="note" maxlength="300"></label>
+    <div class="form-actions">
+      <button id="save">Save entry</button>
+      <button type="button" class="secondary" id="cancel" hidden>Cancel</button>
+    </div>
+    <p id="status" role="status" aria-live="polite"></p>
+  </form>
+
+  <div class="sheets">
+    <section aria-labelledby="period-title">
+      <div class="period">
+        <h2 id="period-title">Statement</h2>
+        <label>Year<select id="year"></select></label>
+        <label>Month<select id="month"></select></label>
+      </div>
+      <dl id="statement" class="statement"></dl>
+    </section>
+
+    <section aria-labelledby="chart-title" class="chart-section">
+      <div class="chart-head">
+        <h2 id="chart-title">Income and expenses by month</h2>
+        <ul class="legend">
+          <li><i class="swatch swatch-income"></i>Income</li>
+          <li><i class="swatch swatch-expense"></i>Expenses</li>
+        </ul>
+      </div>
+      <div class="chart-wrap">
+        <svg id="chart" viewBox="0 0 720 220" role="img" aria-label="Bar chart of monthly income and expenses. The same figures are in the table below."></svg>
+        <div id="tip" class="tip" hidden></div>
+      </div>
+      <details>
+        <summary>Show as a table</summary>
+        <table class="plain">
+          <thead><tr><th scope="col">Month</th><th scope="col">Income</th><th scope="col">Expenses</th><th scope="col">Profit</th></tr></thead>
+          <tbody id="month-table-body"></tbody>
+        </table>
+      </details>
+    </section>
+
+    <section aria-labelledby="entries-title">
+      <div class="period">
+        <h2 id="entries-title">Entries</h2>
+        <span id="count" class="quiet"></span>
+        <label>Show<select id="filter-type"><option value="all">All</option><option value="income">Income</option><option value="expense">Expenses</option></select></label>
+        <label>Search<input id="search" type="search"></label>
+      </div>
+      <p id="empty" class="empty">No entries for this period. Add one with the form to start your books.</p>
+      <div id="table-wrap" class="greenbar">
+        <table>
+          <thead><tr><th scope="col">Date</th><th scope="col">Description</th><th scope="col" class="num">Amount</th><th scope="col" class="num">Tax</th><th scope="col"><span class="sr">Actions</span></th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="cat-title">
+      <h2 id="cat-title">By category</h2>
+      <div class="cats">
+        <div><h3>Income</h3><ul id="cat-income"></ul></div>
+        <div><h3>Expenses</h3><ul id="cat-expense"></ul></div>
+      </div>
+    </section>
+
+    <section aria-labelledby="files-title" class="files">
+      <h2 id="files-title">Your files</h2>
+      <p>Your records live only in this browser, so download a backup regularly.</p>
+      <div class="form-actions">
+        <button type="button" id="backup">Download backup</button>
+        <button type="button" class="secondary" id="export-csv">Export this view to CSV</button>
+        <label class="file-button">Import CSV or backup<input id="import" type="file" accept=".csv,.json"></label>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="colophon">
+  <p>Akeju Ledger, created by Adekunle Akeju. A record-keeping tool, not tax advice. Confirm tax amounts with your accountant.</p>
+</footer>
+</body>
+</html>

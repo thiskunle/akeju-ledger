@@ -1,0 +1,17 @@
+{
+  "name": "akeju-ledger",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Business income and expense tracker created by Adekunle Akeju.",
+  "author": "Adekunle Akeju",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "start": "node scripts/serve.mjs",
+    "test": "node --test tests/ledger.test.mjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.0"
+  }
+}
